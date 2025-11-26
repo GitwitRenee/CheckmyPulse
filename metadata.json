@@ -1,0 +1,5 @@
+{
+  "name": "Essence Journal",
+  "description": "An introspective journaling app that uses Gemini to distill your thoughts into philosophical insights and Imagen to generate abstract visual metaphors of your emotions.",
+  "requestFramePermissions": []
+}
