@@ -16,7 +16,7 @@ const analysisSchema: Schema = {
     },
     imagePrompt: {
       type: Type.STRING,
-      description: "A highly artistic, abstract visual metaphor prompt for an image generator. Do not describe people writing. Describe textures, lighting, landscapes, or surreal objects that represent the feeling. Max 40 words.",
+      description: "A prompt for a hyper-realistic, symbolic image. Describe specific objects, lighting, and textures in high detail. Max 60 words.",
     },
     insight: {
       type: Type.STRING,
@@ -37,11 +37,16 @@ export const analyzeJournalEntry = async (text: string): Promise<AnalysisResult>
       model: ANALYSIS_MODEL,
       contents: text,
       config: {
-        systemInstruction: `You are a jungian psychologist and an abstract artist. 
-        Your goal is to distill the user's journal entry into its emotional core.
-        1. Identify the 'sentiment'.
-        2. Create an 'insight' that validates their feeling or offers a new perspective.
-        3. Create an 'imagePrompt' that is a VISUAL METAPHOR. If they talk about stress, maybe visualize a chaotic knot of neon wires, or a heavy stone in a calm lake. Avoid literal interpretations.
+        systemInstruction: `You are a visionary artist specializing in Hyper-Realistic Symbolism and Jungian psychology.
+        
+        1. Identify the 'sentiment' (one evocative word).
+        2. Create a philosophical 'insight' that validates their feeling or offers a new perspective.
+        3. Create an 'imagePrompt' for a high-end image generator (Imagen).
+           - GOAL: A Hyper-realistic, 8k, Symbolic Masterpiece.
+           - CRITICAL: Do NOT be literal. No people writing, no pens, no journals.
+           - CONCEPT: Translate the emotion into a tangible, photorealistic object or environment (e.g., 'Anxiety' -> A hyper-detailed glass sphere cracking under pressure; 'Peace' -> A calm, mirror-like lake reflecting a galaxy).
+           - DETAILS: Focus on exquisite lighting (volumetric god rays, bioluminescence, cinematic rim lighting), material properties (translucency, refraction, weathering), and atmosphere.
+           - STYLE: Photorealistic, 8k, Unreal Engine 5, Octane Render, Macro Photography, Cinematic.
         4. Select a palette of 3 colors.`,
         responseMimeType: "application/json",
         responseSchema: analysisSchema,
@@ -63,7 +68,7 @@ export const generateEssenceImage = async (prompt: string): Promise<string> => {
   try {
     const response = await ai.models.generateImages({
       model: IMAGE_MODEL,
-      prompt: `${prompt} , highly detailed, 8k, artistic, cinematic lighting, masterpiece, oil painting texture or digital art style`,
+      prompt: `${prompt}, hyper-realistic, 8k resolution, photorealistic, cinematic lighting, volumetric, highly detailed, symbolic masterpiece, sharp focus, ray tracing`,
       config: {
         numberOfImages: 1,
         outputMimeType: 'image/jpeg',
